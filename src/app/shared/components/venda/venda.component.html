@@ -1,0 +1,48 @@
+<div class="col text-center">
+  <br>
+  <button type="button" class="btn btn-success" (click)="open(mymodal)">
+    <i class="fa-solid fa-plus"></i> Nova Venda</button>
+</div>
+
+<br>
+<div class="container">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nome do Produto</th>
+        <th scope="col">Quantidade de Produtos Vendidos</th>
+        <th scope="col">Data da Venda</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ngFor="let curso of cursos | filter:filterTerm">
+        <th scope="row"></th>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #mymodal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Vendas</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="color: white;">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <select class="form-select" id="exampleSelect1" formControlName="categoriaId">
+      <option>Produtos</option>
+      <option>Teste</option>
+      <option>Teste2</option>
+    </select>
+    <label for="exampleTextarea" class="form-label mt-2">Quantidade de Produtos</label>
+      <input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0)
+      ? null : event.charCode >= 48 && event.charCode <= 57"
+      class="form-control" formControlName="quantidadeAluno">
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" style="color: white;">Enviar</button>
+  </div>
+</ng-template>
