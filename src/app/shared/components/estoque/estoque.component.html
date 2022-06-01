@@ -20,9 +20,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr ngFor="let curso of cursos | filter:filterTerm">
-        <th scope="row"></th>
-        <td></td>
+      <tr *ngFor="let obj of stock">
+        <th scope="row">{{obj.productName}}</th>
+        <td>{{obj.productQuantity}}</td>
         <td>
           <button type="button" class="btn btn-outline-warning m-1">
             <i class="fa-solid fa-edit"></i> Editar</button>

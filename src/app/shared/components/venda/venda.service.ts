@@ -9,7 +9,7 @@ import { Sales } from '../../utils/sales';
 })
 export class VendaService {
 
-  baseUrl = `${environment.UrlPrincipal}/api`;
+  baseUrl = `${environment.UrlPrincipal}/api/sales`;
 
   constructor(private http: HttpClient) { }
 

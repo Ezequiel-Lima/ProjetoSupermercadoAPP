@@ -15,7 +15,8 @@ export class EstoqueService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Stock[]>{
-    return this.http.get<Stock[]>(`${this.baseUrl}`);
+    console.log("teste");
+    return this.http.get<Stock[]>(`${this.baseUrl}/stock`);
   }
 
   getById(id: number): Observable<Stock>{

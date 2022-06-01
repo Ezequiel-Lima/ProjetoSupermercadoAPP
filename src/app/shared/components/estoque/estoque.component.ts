@@ -1,5 +1,8 @@
+import { Stock } from './../../utils/stock';
+import { EstoqueService } from './estoque.service';
 import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-estoque',
@@ -7,13 +10,34 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./estoque.component.scss']
 })
 export class EstoqueComponent implements OnInit {
+  public stock: Stock[] = [];
+
   title = 'appBootstrap';
 
   closeResult: string = '';
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal,
+    private service: EstoqueService, private formBuilder: FormBuilder) { }
+
+  Form = this.formBuilder.group({
+      name: [],
+      productQuantity: []
+  });
 
   ngOnInit(): void {
+    this.carregarObjetos();
+  }
+
+  carregarObjetos() {
+    this.service.getAll().subscribe(
+      (stock: Stock[]) => {
+        this.stock = stock;
+        console.log(this.stock);
+      },
+      (erro: any) => {
+        console.error(erro);
+      }
+    );
   }
 
   open(content:any) {

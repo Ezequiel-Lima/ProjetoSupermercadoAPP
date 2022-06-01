@@ -1,5 +1,8 @@
+import { VendaService } from './venda.service';
 import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Sales } from '../../utils/sales';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-venda',
@@ -7,13 +10,28 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./venda.component.scss']
 })
 export class VendaComponent implements OnInit {
+  public sales: Sales[] = [];
+
   title = 'appBootstrap';
 
   closeResult: string = '';
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal, private service: VendaService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.carregarObjetos();
+  }
+
+  carregarObjetos() {
+    this.service.getAll().subscribe(
+      (sales: Sales[]) => {
+        this.sales = sales;
+        console.log(this.sales);
+      },
+      (erro: any) => {
+        console.error(erro);
+      }
+    );
   }
 
   open(content:any) {

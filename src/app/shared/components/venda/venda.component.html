@@ -15,10 +15,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr ngFor="let curso of cursos | filter:filterTerm">
-        <th scope="row"></th>
-        <td></td>
-        <td></td>
+      <tr *ngFor="let obj of sales">
+        <th scope="row">{{obj.productName}}</th>
+        <td>{{obj.productQuantitySales}}</td>
+        <td>{{obj.saleDate}}</td>
       </tr>
     </tbody>
   </table>

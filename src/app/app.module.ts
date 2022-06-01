@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -11,6 +12,7 @@ import { LoginComponent } from './shared/components/login/login.component';
 import { EstoqueComponent } from './shared/components/estoque/estoque.component';
 import { ProdutoComponent } from './shared/components/produto/produto.component';
 import { VendaComponent } from './shared/components/venda/venda.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,9 @@ import { VendaComponent } from './shared/components/venda/venda.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgbModule
   ],
   providers: [],

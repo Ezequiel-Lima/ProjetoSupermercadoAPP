@@ -8,13 +8,13 @@ import { Product } from '../../utils/product';
   providedIn: 'root'
 })
 export class ProdutoService {
-  
+
   baseUrl = `${environment.UrlPrincipal}/api`;
 
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Product[]>{
-    return this.http.get<Product[]>(`${this.baseUrl}`);
+    return this.http.get<Product[]>(`${this.baseUrl}/product`);
   }
 
   getById(id: number): Observable<Product>{
