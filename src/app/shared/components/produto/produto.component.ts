@@ -12,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProdutoComponent implements OnInit {
   public product: Product[] = [];
+  filterTerm: string = "";
 
   title = 'appBootstrap';
 

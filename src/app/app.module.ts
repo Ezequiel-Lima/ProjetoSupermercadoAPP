@@ -13,6 +13,7 @@ import { EstoqueComponent } from './shared/components/estoque/estoque.component'
 import { ProdutoComponent } from './shared/components/produto/produto.component';
 import { VendaComponent } from './shared/components/venda/venda.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    Ng2SearchPipeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

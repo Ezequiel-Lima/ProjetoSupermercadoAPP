@@ -1,6 +1,6 @@
 <div class="container">
   <label class="col-form-label mt-4" for="inputDefault">Produtos</label>
-  <input type="text" class="form-control" placeholder="Pesquisar...">
+  <input type="text" class="form-control" placeholder="Pesquisar..." [(ngModel)]="filterTerm">
 </div>
 
 <div class="col text-center">
@@ -20,7 +20,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let obj of product">
+      <tr *ngFor="let obj of product | filter : filterTerm">
         <th scope="row">{{obj.name}}</th>
         <td>{{obj.price}}</td>
         <td>

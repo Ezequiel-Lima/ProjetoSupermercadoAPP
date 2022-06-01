@@ -1,6 +1,6 @@
 <div class="container">
   <label class="col-form-label mt-4" for="inputDefault">Produtos no estoque</label>
-  <input type="text" class="form-control" placeholder="Pesquisar...">
+  <input type="text" class="form-control" placeholder="Pesquisar..." [(ngModel)]="filterTerm">
 </div>
 
 <div class="col text-center">
@@ -20,7 +20,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let obj of stock">
+      <tr *ngFor="let obj of stock | filter : filterTerm">
         <th scope="row">{{obj.productName}}</th>
         <td>{{obj.productQuantity}}</td>
         <td>

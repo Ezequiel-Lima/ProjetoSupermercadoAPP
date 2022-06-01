@@ -15,6 +15,7 @@ import { Product } from '../../utils/product';
 export class EstoqueComponent implements OnInit {
   public stock: Stock[] = [];
   public product: Product[] = [];
+  filterTerm: string = "";
 
   title = 'appBootstrap';
 
