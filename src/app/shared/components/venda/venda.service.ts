@@ -18,15 +18,15 @@ export class VendaService {
   }
 
   getById(id: number): Observable<Sales>{
-    return this.http.get<Sales>(`${this.baseUrl}/` + id);
+    return this.http.get<Sales>(`${this.baseUrl}` + id);
   }
 
   create(sales: Sales): Observable<Sales>{
-    return this.http.post<Sales>(`${this.baseUrl}/add-sales`, sales);
+    return this.http.post<Sales>(`${this.baseUrl}`, sales);
   }
 
   delete(id: string): Observable<Sales>{
-    return this.http.delete<Sales>(`${this.baseUrl}/` + id);
+    return this.http.delete<Sales>(`${this.baseUrl}` + id);
   }
 
   put(id: number, sales: Sales){
