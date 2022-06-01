@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Product } from '../../utils/product';
 import { FormBuilder } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-produto',
@@ -16,8 +17,13 @@ export class ProdutoComponent implements OnInit {
 
   closeResult: string = '';
 
+  Form = this.formBuilder.group({
+    name: [],
+    price: []
+  });
+
   constructor(private modalService: NgbModal,
-    private service: ProdutoService, private formBuilder: FormBuilder) { }
+    private service: ProdutoService, private formBuilder: FormBuilder, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.carregarObjetos();
@@ -35,6 +41,22 @@ export class ProdutoComponent implements OnInit {
     );
   }
 
+  public async post(){
+    await this.service.create(this.Form.value).subscribe(res => {
+      console.log(res);
+      this.refreshObj();
+    },
+    (erro) => {
+      if (erro.status == 400) {
+        console.log(erro);
+      }
+    });
+  }
+
+  refreshObj(){
+    this.http.get(this.service.baseUrl).toPromise()
+    .then(res => this.product = res as Product[]);
+  }
 
   open(content:any) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {

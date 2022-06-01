@@ -10,25 +10,25 @@ import { Stock } from '../../utils/stock';
 })
 export class EstoqueService {
 
-  baseUrl = `${environment.UrlPrincipal}/api`;
+  baseUrl = `${environment.UrlPrincipal}/api/stock`;
 
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Stock[]>{
     console.log("teste");
-    return this.http.get<Stock[]>(`${this.baseUrl}/stock`);
+    return this.http.get<Stock[]>(`${this.baseUrl}`);
   }
 
   getById(id: number): Observable<Stock>{
-    return this.http.get<Stock>(`${this.baseUrl}/` + id);
+    return this.http.get<Stock>(`${this.baseUrl}` + id);
   }
 
   create(estoque: Stock): Observable<Stock>{
-    return this.http.post<Stock>(`${this.baseUrl}/add-estoque`, estoque);
+    return this.http.post<Stock>(`${this.baseUrl}`, estoque);
   }
 
   delete(id: string): Observable<Stock>{
-    return this.http.delete<Stock>(`${this.baseUrl}/` + id);
+    return this.http.delete<Stock>(`${this.baseUrl}` + id);
   }
 
   put(id: number, estoque: Stock){

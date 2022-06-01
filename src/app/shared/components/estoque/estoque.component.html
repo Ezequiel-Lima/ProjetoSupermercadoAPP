@@ -34,7 +34,7 @@
   </table>
 </div>
 
-<ng-template #mymodal let-modal>
+<ng-template #mymodal let-modal [formGroup]="Form">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Produto em Estoque</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')" style="color: white;">
@@ -43,18 +43,16 @@
   </div>
   <div class="modal-body">
     <label for="exampleTextarea" class="form-label sm-2">Nome do Produto</label>
-    <select class="form-select" id="exampleSelect1" formControlName="categoriaId">
-      <option>Listagem de Produtos</option>
-      <option>Teste</option>
-      <option>Teste2</option>
+    <select class="form-select" id="exampleSelect1" formControlName="productId">
+      <option *ngFor="let item of product" value={{item.id}}>{{item.name}}</option>
     </select>
 
     <label for="exampleTextarea" class="form-label mt-2">Quantidade</label>
       <input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0)
       ? null : event.charCode >= 48 && event.charCode <= 57"
-      class="form-control" formControlName="quantidadeAluno">
+      class="form-control" formControlName="productQuantity">
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" style="color: white;">Enviar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" style="color: white;" (click)="post()">Enviar</button>
   </div>
 </ng-template>

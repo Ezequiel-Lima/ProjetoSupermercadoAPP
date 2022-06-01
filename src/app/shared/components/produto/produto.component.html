@@ -34,7 +34,7 @@
   </table>
 </div>
 
-<ng-template #mymodal let-modal>
+<ng-template #mymodal let-modal [formGroup]="Form">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Produto</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')" style="color: white;">
@@ -43,12 +43,12 @@
   </div>
   <div class="modal-body">
     <label for="exampleTextarea" class="form-label sm-2">Nome do Produto</label>
-    <input type="text" class="form-control" placeholder="Nome">
+    <input type="text" class="form-control" placeholder="Nome" formControlName="name">
 
     <label for="exampleTextarea" class="form-label sm-2">Preço do Produto</label>
-    <input type="text" class="form-control" placeholder="Preço">
+    <input type="text" class="form-control" placeholder="Preço" formControlName="price">
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" style="color: white;">Enviar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" style="color: white;" (click)="post()">Enviar</button>
   </div>
 </ng-template>

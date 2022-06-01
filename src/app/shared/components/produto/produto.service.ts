@@ -9,24 +9,24 @@ import { Product } from '../../utils/product';
 })
 export class ProdutoService {
 
-  baseUrl = `${environment.UrlPrincipal}/api`;
+  baseUrl = `${environment.UrlPrincipal}/api/product`;
 
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Product[]>{
-    return this.http.get<Product[]>(`${this.baseUrl}/product`);
+    return this.http.get<Product[]>(`${this.baseUrl}`);
   }
 
   getById(id: number): Observable<Product>{
-    return this.http.get<Product>(`${this.baseUrl}/` + id);
+    return this.http.get<Product>(`${this.baseUrl}` + id);
   }
 
   create(produto: Product): Observable<Product>{
-    return this.http.post<Product>(`${this.baseUrl}/add-produto`, produto);
+    return this.http.post<Product>(`${this.baseUrl}`, produto);
   }
 
   delete(id: string): Observable<Product>{
-    return this.http.delete<Product>(`${this.baseUrl}/` + id);
+    return this.http.delete<Product>(`${this.baseUrl}` + id);
   }
 
   put(id: number, produto: Product){
