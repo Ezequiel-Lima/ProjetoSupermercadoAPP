@@ -7,6 +7,8 @@ import { ProdutoService } from '../produto/produto.service';
 import { Product } from '../../utils/product';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { EstoqueService } from '../estoque/estoque.service';
+import { Stock } from '../../utils/stock';
 
 @Component({
   selector: 'app-venda',
@@ -16,6 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 export class VendaComponent implements OnInit {
   public sales: Sales[] = [];
   public product: Product[] = [];
+  public stock: Stock[] = [];
 
   title = 'appBootstrap';
 
@@ -31,6 +34,7 @@ export class VendaComponent implements OnInit {
     private service: VendaService,
     private formBuilder: FormBuilder,
     private productService: ProdutoService,
+    private stockService: EstoqueService,
     private http: HttpClient,
     private _toastrService: ToastrService) { }
 
@@ -40,9 +44,9 @@ export class VendaComponent implements OnInit {
   }
 
   carregarProduto() {
-    this.productService.getAll().subscribe(
-      (product: Product[]) => {
-        this.product = product;
+    this.stockService.getAll().subscribe(
+      (stock: Stock[]) => {
+        this.stock = stock;
       },
       (erro: any) => {
         console.error(erro);
@@ -59,7 +63,7 @@ export class VendaComponent implements OnInit {
     (erro) => {
       if (erro.status == 400) {
         console.log(erro);
-        this._toastrService.error("Ops, Houve algum problema");
+        this._toastrService.error("Não existe essa quantidade de produtos em estoque.");
       }
     });
   }

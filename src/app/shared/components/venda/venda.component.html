@@ -35,7 +35,7 @@
     <label for="exampleTextarea" class="form-label sm-2">Nome do Produto</label>
     <select class="form-select" id="exampleSelect1" formControlName="productId">
       <option>Selecionar...</option>
-      <option *ngFor="let item of product" value={{item.id}}>{{item.name}}</option>
+      <option *ngFor="let item of stock" value={{item.productId}}>{{item.productName}}</option>
     </select>
 
     <label for="exampleTextarea" class="form-label mt-2">Quantidade de Produtos</label>
