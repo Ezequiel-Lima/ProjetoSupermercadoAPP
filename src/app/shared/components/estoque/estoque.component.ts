@@ -17,6 +17,8 @@ export class EstoqueComponent implements OnInit {
   public product: Product[] = [];
   filterTerm: string = "";
 
+  public stockSelecionado: Stock = new Stock();
+
   title = 'appBootstrap';
 
   closeResult: string = '';
@@ -29,6 +31,11 @@ export class EstoqueComponent implements OnInit {
       productName: [],
       productQuantity: []
   });
+
+  FormEdit = this.formBuilder.group({
+    id: [],
+    productQuantity: []
+});
 
   ngOnInit(): void {
     this.carregarObjetos();
@@ -71,6 +78,36 @@ export class EstoqueComponent implements OnInit {
     });
   }
 
+  public getById(stock: number){
+    this.service.getById(stock).subscribe(res =>{
+      this.stockSelecionado = res;
+    })
+  }
+
+  onSelect(selectedItem: Stock) {
+    this.getById(selectedItem.id); 
+  }
+
+  openEdit(content:any) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  public async put(stock: Stock){
+    await this.service.put(stock).subscribe(res => {
+      console.log(res);
+      this.refreshObj();
+    },
+    (erro) => {
+      if (erro.status == 400) {
+        console.log(erro);
+      }
+    });
+  }
+
   refreshObj(){
     this.http.get(this.service.baseUrl).toPromise()
     .then(res => this.stock = res as Stock[]);
@@ -93,5 +130,18 @@ export class EstoqueComponent implements OnInit {
     } else {
       return  `with: ${reason}`;
     }
+  }
+
+  public async delete(stock: Stock){
+    await this.service.delete(stock.id.toString()).subscribe(res => {
+      this.refreshObj();
+      console.log(res);
+    },
+
+    (erro) => {
+      if (erro.status == 400) {
+        console.log(erro);
+      }
+    });
   }
 }

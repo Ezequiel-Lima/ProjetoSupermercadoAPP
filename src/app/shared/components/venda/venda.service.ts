@@ -17,7 +17,7 @@ export class VendaService {
     return this.http.get<Sales[]>(`${this.baseUrl}`);
   }
 
-  getById(id: number): Observable<Sales>{
+  getById(id: string): Observable<Sales>{
     return this.http.get<Sales>(`${this.baseUrl}` + id);
   }
 

@@ -24,9 +24,9 @@
         <th scope="row">{{obj.name}}</th>
         <td>{{obj.price}}</td>
         <td>
-          <button type="button" class="btn btn-outline-warning m-1">
+          <button type="button" class="btn btn-outline-warning m-1" (click)="openEdit(mymodalproduct)" (click)="onSelect(obj)">
             <i class="fa-solid fa-edit"></i> Editar</button>
-          <button type="button" class="btn btn-primary">
+          <button type="button" class="btn btn-primary" (click)="delete(obj)">
             <i class="fa-solid fa-trash"></i> Deletar</button>
         </td>
       </tr>
@@ -50,5 +50,24 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" style="color: white;" (click)="post()">Enviar</button>
+  </div>
+</ng-template>
+
+<ng-template #mymodalproduct let-modal [formGroup]="FormEdit">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Alterar Produto</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')" style="color: white;">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <label for="exampleTextarea" class="form-label sm-2">Nome do Produto</label>
+    <input type="text" class="form-control" placeholder="Nome" formControlName="name"  [(ngModel)]="productSelecionado.name">
+
+    <label for="exampleTextarea" class="form-label sm-2">Preço do Produto</label>
+    <input type="text" class="form-control" placeholder="Preço" formControlName="price" [(ngModel)]="productSelecionado.price">
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" style="color: white;" (click)="put(productSelecionado)">Enviar</button>
   </div>
 </ng-template>

@@ -24,9 +24,9 @@
         <th scope="row">{{obj.productName}}</th>
         <td>{{obj.productQuantity}}</td>
         <td>
-          <button type="button" class="btn btn-outline-warning m-1">
+          <button type="button" class="btn btn-outline-warning m-1" (click)="openEdit(mymodalEdit)" (click)="onSelect(obj)">
             <i class="fa-solid fa-edit"></i> Editar</button>
-          <button type="button" class="btn btn-primary">
+          <button type="button" class="btn btn-primary" (click)="delete(obj)">
             <i class="fa-solid fa-trash"></i> Deletar</button>
         </td>
       </tr>
@@ -54,5 +54,21 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" style="color: white;" (click)="post()">Enviar</button>
+  </div>
+</ng-template>
+
+<ng-template #mymodalEdit let-modal [formGroup]="FormEdit">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Quantidade Produto em Estoque</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')" style="color: white;">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+    <label for="exampleTextarea" class="form-label mt-2">Quantidade</label>
+      <input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0)
+      ? null : event.charCode >= 48 && event.charCode <= 57"
+      class="form-control" formControlName="productQuantity" [(ngModel)]="stockSelecionado.productQuantity">
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" style="color: white;" (click)="put(stockSelecionado)">Enviar</button>
   </div>
 </ng-template>

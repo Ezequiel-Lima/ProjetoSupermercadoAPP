@@ -12,6 +12,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProdutoComponent implements OnInit {
   public product: Product[] = [];
+  public productSelecionado: Product = new Product();
+
   filterTerm: string = "";
 
   title = 'appBootstrap';
@@ -19,6 +21,12 @@ export class ProdutoComponent implements OnInit {
   closeResult: string = '';
 
   Form = this.formBuilder.group({
+    name: [],
+    price: []
+  });
+
+  FormEdit = this.formBuilder.group({
+    id: [],
     name: [],
     price: []
   });
@@ -54,6 +62,44 @@ export class ProdutoComponent implements OnInit {
     });
   }
 
+  public getById(product: number){
+    this.service.getById(product).subscribe(res =>{
+      this.productSelecionado = res;
+      console.log(this.productSelecionado)
+    })
+  }
+
+onSelect(selectedItem: Product) {
+    this.getById(selectedItem.id); 
+  }
+
+// public async put(curso: Curso){
+//     await this.cursoService.put(curso.id, curso).subscribe(res => {
+//       this.refreshCurso();
+//       this._toastrService.success("Registro atualizado com sucesso")
+//       console.log(res);
+//     },
+
+//     (erro) => {
+//       if (erro.status == 400) {
+//         console.log(erro);
+//         this._toastrService.error(erro.error);
+//       }
+//     });
+//   }
+
+  public async put(product: Product){
+    await this.service.put(product).subscribe(res => {
+      console.log(res);
+      this.refreshObj();
+    },
+    (erro) => {
+      if (erro.status == 400) {
+        console.log(erro);
+      }
+    });
+  }
+
   refreshObj(){
     this.http.get(this.service.baseUrl).toPromise()
     .then(res => this.product = res as Product[]);
@@ -64,6 +110,27 @@ export class ProdutoComponent implements OnInit {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  openEdit(content:any) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  public async delete(product: Product){
+    await this.service.delete(product.id.toString()).subscribe(res => {
+      this.refreshObj();
+      console.log(res);
+    },
+
+    (erro) => {
+      if (erro.status == 400) {
+        console.log(erro);
+      }
     });
   }
 
