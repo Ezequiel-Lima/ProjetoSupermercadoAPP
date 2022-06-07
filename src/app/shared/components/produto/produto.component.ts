@@ -4,6 +4,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Product } from '../../utils/product';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-produto',
@@ -32,7 +33,10 @@ export class ProdutoComponent implements OnInit {
   });
 
   constructor(private modalService: NgbModal,
-    private service: ProdutoService, private formBuilder: FormBuilder, private http: HttpClient) { }
+    private service: ProdutoService,
+    private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private _toastrService: ToastrService) { }
 
   ngOnInit(): void {
     this.carregarObjetos();
@@ -54,10 +58,12 @@ export class ProdutoComponent implements OnInit {
     await this.service.create(this.Form.value).subscribe(res => {
       console.log(res);
       this.refreshObj();
+      this._toastrService.success("Registro inserido com sucesso")
     },
     (erro) => {
       if (erro.status == 400) {
         console.log(erro);
+        this._toastrService.error("Ops, Houve algum problema");
       }
     });
   }
@@ -70,7 +76,7 @@ export class ProdutoComponent implements OnInit {
   }
 
 onSelect(selectedItem: Product) {
-    this.getById(selectedItem.id); 
+    this.getById(selectedItem.id);
   }
 
 // public async put(curso: Curso){
@@ -92,10 +98,12 @@ onSelect(selectedItem: Product) {
     await this.service.put(product).subscribe(res => {
       console.log(res);
       this.refreshObj();
+      this._toastrService.warning("Registro alterado com sucesso")
     },
     (erro) => {
       if (erro.status == 400) {
         console.log(erro);
+        this._toastrService.error("Ops, Houve algum problema");
       }
     });
   }
@@ -111,6 +119,7 @@ onSelect(selectedItem: Product) {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+    this.Form.reset();
   }
 
   openEdit(content:any) {
@@ -125,11 +134,13 @@ onSelect(selectedItem: Product) {
     await this.service.delete(product.id.toString()).subscribe(res => {
       this.refreshObj();
       console.log(res);
+      this._toastrService.warning("Registro deletado com sucesso")
     },
 
     (erro) => {
       if (erro.status == 400) {
         console.log(erro);
+        this._toastrService.error("Ops, Houve algum problema");
       }
     });
   }

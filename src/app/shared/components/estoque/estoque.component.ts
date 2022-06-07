@@ -6,6 +6,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../../utils/product';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-estoque',
@@ -24,7 +25,11 @@ export class EstoqueComponent implements OnInit {
   closeResult: string = '';
 
   constructor(private modalService: NgbModal,
-    private service: EstoqueService, private formBuilder: FormBuilder, private http: HttpClient, private productService: ProdutoService) { }
+    private service: EstoqueService,
+    private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private productService: ProdutoService,
+    private _toastrService: ToastrService) { }
 
   Form = this.formBuilder.group({
       productId: [],
@@ -70,10 +75,12 @@ export class EstoqueComponent implements OnInit {
     await this.service.create(this.Form.value).subscribe(res => {
       console.log(res, "testetete");
       this.refreshObj();
+      this._toastrService.success("Registro inserido com sucesso")
     },
     (erro) => {
       if (erro.status == 400) {
         console.log(erro);
+        this._toastrService.error(erro.error);
       }
     });
   }
@@ -85,7 +92,7 @@ export class EstoqueComponent implements OnInit {
   }
 
   onSelect(selectedItem: Stock) {
-    this.getById(selectedItem.id); 
+    this.getById(selectedItem.id);
   }
 
   openEdit(content:any) {
@@ -94,16 +101,19 @@ export class EstoqueComponent implements OnInit {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+    this.Form.reset();
   }
 
   public async put(stock: Stock){
     await this.service.put(stock).subscribe(res => {
       console.log(res);
       this.refreshObj();
+      this._toastrService.warning("Registro Alterado com sucesso")
     },
     (erro) => {
       if (erro.status == 400) {
         console.log(erro);
+        this._toastrService.error(erro.error);
       }
     });
   }
@@ -136,11 +146,13 @@ export class EstoqueComponent implements OnInit {
     await this.service.delete(stock.id.toString()).subscribe(res => {
       this.refreshObj();
       console.log(res);
+      this._toastrService.warning("Registro deletado com sucesso")
     },
 
     (erro) => {
       if (erro.status == 400) {
         console.log(erro);
+        this._toastrService.error(erro.error);
       }
     });
   }
